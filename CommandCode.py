@@ -1,11 +1,11 @@
 import random
 from PropertyLibrary import *
+from VisualDice import dice1, dice2, show_dice
+
 playerpos = 0
 playermoney = 750
 playerchar = "∆"
 ownedprops = []
-dice1 = 0
-dice2 = 0
 move = 0
 
 flag = True
@@ -13,6 +13,7 @@ hasrolled = False
 injail = False
 rollcount = 0
 doublecount = 0
+
 
 def propertycard(p):
 	print("")
@@ -27,6 +28,25 @@ def propertycard(p):
 	print("    \"     hotel: $" + boardpos[p][hotel])
 	print("")
 	print("Price of single building: $" + boardpos[p][buildprice])
+	print("")
+
+def railcard():
+	print("")
+	print(boardpos[playerpos][name])
+	print("- railroad -")
+	print("Price: $200")
+	print("Rent with one railway: $25")
+	print("    \"     two railways: $50")
+	print("    \"     three railways: $100")
+	print("    \"     four railways: $200")
+	print("")
+
+def utilitycard():
+	print("")
+	print(boardpos[playerpos][name])
+	print("- utility -")
+	print("If ONE Utility is owned, rent is 4x amount shown on dice.")
+	print("If BOTH Utilities are owned, rent is 10x the amount shown on the dice.")
 	print("")
 
 command = input("What would you like to do? ").lower()
@@ -56,14 +76,16 @@ while flag == True:
 		#print("buy house - attempt to buy a house on a property you own")
 		print()
 
-	#Rolling the dice, allowing it to be ready for visual dice.
+	#Rolling the dice
 	elif (command == "roll") & (hasrolled == False):
-		dice1 = random.randint(1,6)
-		dice2 = random.randint(1,6)
-		rollturn = dice1+dice2
-		#print(dice1)
-		#print(dice2)
-		playerpos += rollturn
+		rollturn = dice1 + dice2
+		if playerpos + rollturn >= 40:
+			playerpos = rollturn - (40 - playerpos)
+			print("You passed Go! $200 added to your account.")
+			playermoney += 200
+		else:
+			playerpos += rollturn
+		show_dice()
 		print("You have moved", rollturn ,"spaces! You're now on", boardpos[playerpos][name] + ".")
 		print()
 		hasrolled = True
@@ -111,8 +133,22 @@ while flag == True:
 
 		#getting info for tile
 		elif command.split()[1] == "tile":
-			if len(boardpos[playerpos]) == 11:
+			if (len(boardpos[playerpos]) == 11) and (boardpos[playerpos][colour] != "railway"):
 				propertycard(playerpos)
+				if boardpos[playerpos][owner] == "":
+					pass
+				else:
+					print("Owned by", boardpos[i][owner])
+					print("")
+			elif (len(boardpos[playerpos]) == 11) and (boardpos[playerpos][colour] == "railway"):
+				railcard()
+				if boardpos[playerpos][owner] == "":
+					pass
+				else:
+					print("Owned by", boardpos[i][owner])
+					print("")
+			elif (len(boardpos[playerpos]) == 4) and (boardpos[playerpos][colour] == "utility"):
+				utilitycard()
 			elif boardpos[playerpos][name] == "Go":
 				print("This is Go. It's the first tile of the board, and every time you pass it you get $200 salary!")
 				print("")
