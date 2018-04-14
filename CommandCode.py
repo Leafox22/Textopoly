@@ -3,7 +3,7 @@ from PropertyLibrary import *
 from VisualDice import dice1, dice2, show_dice
 
 playerpos = 0
-playermoney = 750
+playermoney = 1500
 playerchar = "∆"
 ownedprops = []
 move = 0
@@ -16,7 +16,7 @@ doublecount = 0
 
 
 def propertycard(p):
-	print("")
+	print("--------------------------------*")
 	print(boardpos[p][name])
 	print("- " + boardpos[p][colour].title() + " -")
 	print("Price: $" + boardpos[p][price])
@@ -28,11 +28,10 @@ def propertycard(p):
 	print("    \"     hotel: $" + boardpos[p][hotel])
 	print("")
 	print("Price of single building: $" + boardpos[p][buildprice])
-	print("")
 
-def railcard():
+def railcard(i):
 	print("")
-	print(boardpos[playerpos][name])
+	print(boardpos[i][name])
 	print("- railroad -")
 	print("Price: $200")
 	print("Rent with one railway: $25")
@@ -41,9 +40,9 @@ def railcard():
 	print("    \"     four railways: $200")
 	print("")
 
-def utilitycard():
-	print("")
-	print(boardpos[playerpos][name])
+def utilitycard(i):
+	print("--------------------------------*")
+	print(boardpos[i][name])
 	print("- utility -")
 	print("If ONE Utility is owned, rent is 4x amount shown on dice.")
 	print("If BOTH Utilities are owned, rent is 10x the amount shown on the dice.")
@@ -118,37 +117,64 @@ while flag == True:
 			for o in ownedprops:
 				print("Properties:", o[name], end=" ")
 			print("")
+			print("")
 
 		#gives information on specified property
 		elif command.split()[1] == "property":
 			propsearch = input("What property are you wanting to know about? ")
 			for i in range(0, len(boardpos)):
 				if propsearch == boardpos[i][name].lower():
-					propertycard(i)
-					if boardpos[i][owner] == "":
-						pass
-					else:
-						print("Owned by", boardpos[i][owner])
-						print("")
+					if boardpos[i][colour] == "railway":
+						propertycard(i)
+						if boardpos[i][owner] == "":
+							print("< unowned >")
+							print("--------------------------------*")
+						else:
+							print("< Owned by", boardpos[i][owner], ">")
+							print("--------------------------------*")
+					elif len(boardpos[i]) == 11:
+						propertycard(i)
+						if boardpos[i][owner] == "":
+							print("< unowned >")
+							print("--------------------------------*")
+						else:
+							print("< Owned by", boardpos[i][owner],">")
+							print("--------------------------------*")
+					elif boardpos[i][colour] == "utility":
+						utilitycard(i)
+						if boardpos[i][3] == "":
+							print("< unowned >")
+							print("--------------------------------*")
+						else:
+							print("Owned by", boardpos[i][3])
+							print("")
 
 		#getting info for tile
 		elif command.split()[1] == "tile":
-			if (len(boardpos[playerpos]) == 11) and (boardpos[playerpos][colour] != "railway"):
+			if boardpos[playerpos][colour] == "utility":
+					utilitycard(playerpos)
+					if boardpos[playerpos][owner] == "":
+						print("< unowned >")
+						print("--------------------------------*")
+					else:
+						print("< Owned by", boardpos[playerpos][owner], ">")
+						print("--------------------------------*")
+			elif (len(boardpos[playerpos]) == 11) and (boardpos[playerpos][colour] != "railway"):
 				propertycard(playerpos)
 				if boardpos[playerpos][owner] == "":
-					pass
+					print("< unowned >")
+					print("--------------------------------*")
 				else:
-					print("Owned by", boardpos[i][owner])
-					print("")
+					print("< Owned by", boardpos[playerpos][owner], ">")
+					print("--------------------------------*")
 			elif (len(boardpos[playerpos]) == 11) and (boardpos[playerpos][colour] == "railway"):
 				railcard()
 				if boardpos[playerpos][owner] == "":
-					pass
+					print("< unowned >")
+					print("--------------------------------*")
 				else:
-					print("Owned by", boardpos[i][owner])
-					print("")
-			elif (len(boardpos[playerpos]) == 4) and (boardpos[playerpos][colour] == "utility"):
-				utilitycard()
+					print("< Owned by", boardpos[playerpos][owner], ">")
+					print("--------------------------------*")
 			elif boardpos[playerpos][name] == "Go":
 				print("This is Go. It's the first tile of the board, and every time you pass it you get $200 salary!")
 				print("")
