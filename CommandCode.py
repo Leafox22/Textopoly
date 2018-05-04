@@ -1,5 +1,5 @@
 from PropertyLibrary import *
-from VisualDice import dice1, dice2, make_dice1, make_dice2, show_dice
+from VisualDice import show_dice
 
 playerpos = 0
 playermoney = 1500
@@ -78,10 +78,10 @@ while flag == True:
 	#Rolling the dice
 	elif (command == "roll") & (hasrolled == False):
 		#make new dice
-#		dice1 = make_dice1()
-#		dice2 = make_dice2()
-		show_dice()
-		rollturn = dice1 + dice2
+		dicestuff = show_dice()
+		dice1 = dicestuff[0]
+		dice2 = dicestuff[1]
+		rollturn = dice1 + dice2 
 		if playerpos + rollturn >= 40:
 			playerpos = rollturn - (40 - playerpos)
 			print("You passed Go! $200 added to your account.")
