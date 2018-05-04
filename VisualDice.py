@@ -9,8 +9,8 @@ def make_dice2():
 	return(local_dice2)
 
 
-#dice1 = make_dice1()
-#dice2 = make_dice2()
+dice1 = make_dice1()
+dice2 = make_dice2()
 
 def show_dice():
 	#dice art (Only front face from: Joan G. Stark, https://www.asciiart.eu/miscellaneous/dice)

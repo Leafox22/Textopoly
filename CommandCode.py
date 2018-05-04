@@ -1,6 +1,6 @@
 import random
 from PropertyLibrary import *
-from VisualDice import *
+from VisualDice import dice1, dice2, make_dice1, make_dice2, show_dice
 
 playerpos = 0
 playermoney = 1500
@@ -79,8 +79,8 @@ while flag == True:
 	#Rolling the dice
 	elif (command == "roll") & (hasrolled == False):
 		#make new dice
-		dice1 = make_dice1()
-		dice2 = make_dice2()
+#		dice1 = make_dice1()
+#		dice2 = make_dice2()
 		show_dice()
 		rollturn = dice1 + dice2
 		if playerpos + rollturn >= 40:
