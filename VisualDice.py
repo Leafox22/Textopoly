@@ -8,9 +8,17 @@ def make_dice2():
 	local_dice2 = random.randint(1, 6)
 	return(local_dice2)
 
-
-dice1 = make_dice1()
-dice2 = make_dice2()
+def roll():
+	DiceStuff = []
+	dice1 = make_dice1()
+	dice2 = make_dice2()
+	turn = dice1+dice2
+	DiceStuff.append(dice1)
+	DiceStuff.append(dice2)
+	DiceStuff.append(turn)
+	return(DiceStuff)
+print(roll())
+	
 
 def show_dice():
 	#dice art (Only front face from: Joan G. Stark, https://www.asciiart.eu/miscellaneous/dice)

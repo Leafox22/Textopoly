@@ -1,4 +1,3 @@
-import random
 from PropertyLibrary import *
 from VisualDice import dice1, dice2, make_dice1, make_dice2, show_dice
 
