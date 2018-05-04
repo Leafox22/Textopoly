@@ -1,121 +1,62 @@
 import random
 
-dice1 = random.randint(1, 6)
-dice2 = random.randint(1, 6)
-	
 def show_dice():
-	
 	#dice art (Only front face from: Joan G. Stark, https://www.asciiart.eu/miscellaneous/dice)
+	
+	dicestuff = []
+	dice1 = random.randint(1, 6)
+	dice2 = random.randint(1, 6)
+	dicestuff.append(dice1)
+	dicestuff.append(dice2)
 
 	#first dice
-	if dice1 == 1:
-		print("""	 _______
-	|       |
-	|   o   |
-	|       |
-	'-------' 
-	""")
-	elif dice1 == 2:
-		print("""	 _______
-	|     o |
-	|       |
-	| o     |
-	'-------'
-	""")
-	elif dice1 == 3:
-		print("""
+	for dice in dicestuff:
+		if dice == 1:
+			print("""	
+ _______
+|       |
+|   o   |
+|       |
+'-------' 
+		""")
+		elif dice == 2:
+			print("""	
+ _______
+|     o |
+|       |
+| o     |
+'-------'
+		""")
+		elif dice == 3:
+			print("""
 	 _______
 	|     o |
 	|   o   |
 	| o     |
 	'-------'
-	""")
-	elif dice1 == 4:
-		print("""
+		""")
+		elif dice == 4:
+			print("""
 	 _______
 	| o   o |
 	|       |
 	| o   o |
 	'-------'
-	""")
-	elif dice1 == 5:
-		print("""
-	 _______
-	| o   o |
-	|   o   |
-	| o   o |
-	'-------'
-	""")
-	elif dice1 == 6:
-		print("""
-	 _______
-	| o   o |
-	| o   o |
-	| o   o |
-	'-------'
-	""")
-
-
-	#second dice
-	if dice2 == 1:
-		print("""
-  _______
- |       |
- |   o   |
- |       |
- '-------'
-	""")
-	elif dice2 == 2:
-		print("""
-  _______
- |     o |
- |       |
- | o     |
- '-------'
-	""")
-	elif dice2 == 3:
-		print("""
-  _______
- |     o |
- |   o   |
- | o     |
- '-------'
-	""")
-	elif dice2 == 4:
-		print("""
-  _______
- | o   o |
- |       |
- | o   o |
- '-------'
-	""")
-	elif dice2 == 5:
-		print("""
-  _______
- | o   o |
- |   o   |
- | o   o |
- '-------'
-	""")
-	elif dice2 == 6:
-		print("""
-  _______
- | o   o |
- | o   o |
- | o   o |
- '-------'
-	""")
-
-
-
-#not sure we need this! But the dice are friggin awesome
-'''
-def show_m1y(player):
-	real_player = player - 1
-	print("Player", player, "has", str(m1y_bank[real_player]), "MONOPOLY Dollars")
-
-
-for i in player_list:
-	show_m1y(i)
-'''
-
+		""")
+		elif dice == 5:
+			print("""
+		 _______
+		| o   o |
+		|   o   |
+		| o   o |
+		'-------'
+		""")
+		elif dice == 6:
+			print("""
+		 _______
+		| o   o |
+		| o   o |
+		| o   o |
+		'-------'
+		""")
+	return (dicestuff)	

@@ -1,6 +1,5 @@
-import random
 from PropertyLibrary import *
-from VisualDice import dice1, dice2, show_dice
+from VisualDice import show_dice
 
 playerpos = 0
 playermoney = 1500
@@ -66,25 +65,29 @@ while flag == True:
 
 	#Bringing up the command list
 	elif command == "?":
+		print()
 		print("end - ends your turn")
-		print("roll - rolls for your turn, letting you move that number of spaces.")
-		print("info/i player - for your player info (money, properties etc.)")
-		print("info/i property - get the info for a property you specify.")
-		print("info/i tile - gets the info for the tile you are currently on")
+		print("roll - rolls the dice and moves your token.")
+		print("info/i player - shows your player info (money, properties etc.)")
+		print("info/i property - shows the info for a property you specify")
+		print("info/i tile - shows the info for the tile you are currently on")
 		print("buy - attempt to buy the property your piece is currently on.")
 		#print("buy house - attempt to buy a house on a property you own")
 		print()
 
 	#Rolling the dice
 	elif (command == "roll") & (hasrolled == False):
-		rollturn = dice1 + dice2
+		#make new dice
+		dicestuff = show_dice()
+		dice1 = dicestuff[0]
+		dice2 = dicestuff[1]
+		rollturn = dice1 + dice2 
 		if playerpos + rollturn >= 40:
 			playerpos = rollturn - (40 - playerpos)
 			print("You passed Go! $200 added to your account.")
 			playermoney += 200
 		else:
 			playerpos += rollturn
-		show_dice()
 		print("You have moved", rollturn ,"spaces! You're now on", boardpos[playerpos][name] + ".")
 		print()
 		hasrolled = True
@@ -97,6 +100,7 @@ while flag == True:
 				playerpos = 10
 				print("You rolled three doubles! That's speeding, you're in jail!")
 				injail = True
+				hasrolled = True
 
 	#Telling that they can't roll again.
 	elif (command == "roll") & (hasrolled == True):
@@ -123,7 +127,7 @@ while flag == True:
 		elif command.split()[1] == "property":
 			propsearch = input("What property are you wanting to know about? ")
 			for i in range(0, len(boardpos)):
-				if propsearch == boardpos[i][name].lower():
+				if propsearch.lower() == boardpos[i][name].lower():
 					if boardpos[i][colour] == "railway":
 						propertycard(i)
 						if boardpos[i][owner] == "":
@@ -150,16 +154,8 @@ while flag == True:
 							print("")
 
 		#getting info for tile
-		elif command.split()[1] == "tile":
-			if boardpos[playerpos][colour] == "utility":
-					utilitycard(playerpos)
-					if boardpos[playerpos][owner] == "":
-						print("< unowned >")
-						print("--------------------------------*")
-					else:
-						print("< Owned by", boardpos[playerpos][owner], ">")
-						print("--------------------------------*")
-			elif (len(boardpos[playerpos]) == 11) and (boardpos[playerpos][colour] != "railway"):
+		elif command.split()[1] == "tile":				
+			if (len(boardpos[playerpos]) == 11) and (boardpos[playerpos][colour] != "railway"):
 				propertycard(playerpos)
 				if boardpos[playerpos][owner] == "":
 					print("< unowned >")
@@ -176,7 +172,7 @@ while flag == True:
 					print("< Owned by", boardpos[playerpos][owner], ">")
 					print("--------------------------------*")
 			elif boardpos[playerpos][name] == "Go":
-				print("This is Go. It's the first tile of the board, and every time you pass it you get $200 salary!")
+				print("This is Go. It's the first tile of the board, and every time you pass it you get $200 salary! Yeet!")
 				print("")
 			elif boardpos[playerpos][name] == "Community Chest":
 				print("This is a Community Chest. It can have any number of wonderful things in it, and it's likely to be cash! No guarantees though.")
@@ -190,6 +186,14 @@ while flag == True:
 			elif boardpos[playerpos][name] == "Super Tax":
 				print("Uh oh. This is the Super Tax tile, and it means you'll have to pay $100 to the bank! It's what you get for working towards a stable retirement!")
 				print("")
+			elif boardpos[playerpos][colour] == "utility":
+					utilitycard(playerpos)
+					if boardpos[playerpos][owner] == "":
+						print("< unowned >")
+						print("--------------------------------*")
+					else:
+						print("< Owned by", boardpos[playerpos][owner], ">")
+						print("--------------------------------*")
 
 		else:
 			print("Invalid input, try 'info player', 'info property', or 'info tile'")
@@ -201,7 +205,7 @@ while flag == True:
 			print("You can't buy", boardpos[playerpos][name] + "!")
 			print("")
 		elif boardpos[playerpos][owner]!= "":
-			print("This property is already owned")
+			print("This property is already owned!")
 			print()
 		elif playermoney >= int(boardpos[playerpos][price]):
 			#confirmation before buying
