@@ -67,11 +67,12 @@ while flag == True:
 	elif command == "?":
 		print()
 		print("end - ends your turn")
-		print("roll - rolls the dice and moves your token.")
+		print("roll - rolls the dice and moves your token")
 		print("info/i player - shows your player info (money, properties etc.)")
 		print("info/i property - shows the info for a property you specify")
 		print("info/i tile - shows the info for the tile you are currently on")
-		print("buy - attempt to buy the property your piece is currently on.")
+		print("buy - attempt to buy the property your piece is currently on")
+		print("draw - takes a community chest/chance card from the respective pile")
 		#print("buy house - attempt to buy a house on a property you own")
 		print()
 
@@ -108,7 +109,7 @@ while flag == True:
 		print()
 
 	#Basic info command
-	elif (infocheck[0] == "info") or (infocheck[0] == "i"):
+	elif command != "" and ((infocheck[0] == "info") or (infocheck[0] == "i")):
 		if len(infocheck) == 1:
 			print("Invalid input, try 'info player', 'info property', or 'info tile'")
 			print()
@@ -211,7 +212,7 @@ while flag == True:
 			#confirmation before buying
 			buyconfirm = input(
 			"Are you sure you want to buy this property? It will cost $"
-			+ str(boardpos[playerpos][price]) + " (You have $" + str(playermoney) + ") ")
+			+ str(boardpos[playerpos][price]) + " (You have $" + str(playermoney) + "): ")
 			if (buyconfirm.lower() == "yes") or (buyconfirm.lower() == "buy"):
 				playermoney = playermoney - int(boardpos[playerpos][price])
 				boardpos[playerpos][owner] = playerchar
@@ -227,6 +228,10 @@ while flag == True:
 		else:
 			print("You do not have enough money for that.")
 			print()
+			
+	#draw card command
+	elif command == "draw":
+		
 
 	#error statement for invalid commands
 	else:

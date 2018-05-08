@@ -18,3 +18,6 @@ m = ["Take a trip to Mayfair – Advance token to Mayfair."]
 n = ["You have been elected Chairman of the Board – Pay each player $50"]
 o = ["Your building loan matures – Collect $150 "]
 p = ["You have won a crossword competition - collect $100"]
+
+#ChanceLibrary
+ChanceLibrary = [a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p]

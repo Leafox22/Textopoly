@@ -19,3 +19,6 @@ n = ["You have won second prize in a beauty contest– collect $10"]
 o = ["You inherit $100"]
 p = ["From sale of stock you get $50"]
 q = ["Holiday Fund matures - Receive $100"]
+
+#community chest list
+CmuChest = [a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p, q]
