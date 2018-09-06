@@ -82,7 +82,7 @@ while flag == True:
 		dicestuff = show_dice()
 		dice1 = dicestuff[0]
 		dice2 = dicestuff[1]
-		rollturn = dice1 + dice2 
+		rollturn = dice1 + dice2
 		if playerpos + rollturn >= 40:
 			playerpos = rollturn - (40 - playerpos)
 			print("You passed Go! $200 added to your account.")
@@ -155,7 +155,7 @@ while flag == True:
 							print("")
 
 		#getting info for tile
-		elif command.split()[1] == "tile":				
+		elif command.split()[1] == "tile":
 			if (len(boardpos[playerpos]) == 11) and (boardpos[playerpos][colour] != "railway"):
 				propertycard(playerpos)
 				if boardpos[playerpos][owner] == "":
@@ -228,10 +228,10 @@ while flag == True:
 		else:
 			print("You do not have enough money for that.")
 			print()
-			
+
 	#draw card command
 	elif command == "draw":
-		
+		pass
 
 	#error statement for invalid commands
 	else:
