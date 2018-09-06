@@ -13,4 +13,25 @@ class PropertyCard(object):
         self.buildprice = buildprice
         self.owner = owner
 
-a = PropertyCard("Old Kent Rd", "brown", "60", "2", "10", "30", "90", "160", "250", "50")
+class consumable(object):
+
+    def __init__(self, choice):
+        self.choice = choice
+
+    def poop(self):
+        if self.choice == "chance":
+            print("pingers ;)")
+
+
+gameboard = {}
+with open("PropertyStats") as prop:
+    for readin in prop:
+        line = readin.split()
+        if line[0] == "p":
+            gameboard[line[2].replace("_", " ")] = PropertyCard(line[2].replace("_", " "), line[3].replace("_", " "), line[4], line[5], line[6], line[7], line[8], line[9], line[10], line[11])
+        elif line[0] == "c":
+            gameboard[line[2].replace("_", " ")] = consumable(line[2].replace("_", " "))
+            pass
+
+
+# print(gameboard["Mayfair"].colour)
