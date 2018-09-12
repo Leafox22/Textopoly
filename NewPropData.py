@@ -1,6 +1,3 @@
-chance = 0
-cmuchest = 1
-
 class PropertyCard(object):
 
     def __init__(self, name, colour, price, rent, onehouse, twohouse, threehouse, fourhouse, hotel, buildprice, *owner):
@@ -59,7 +56,7 @@ class OtherTile(object):
         if name == "Go To Jail":
             pass
         if name == "Free Parking":
-            pass
+            self.stash = 0      # This is where the tax goes so you can claim it by landing!
 
     def taxcalc(self):
         pass
@@ -75,12 +72,10 @@ class Utility(object):
 #     def __init__(self):       # done yet. If we delete stuff/work
 #         self.name = "---"     # backwards, we'll need it again.
 
-def fillgameboard():
+def boardcreate():
     properties = {}
     go = OtherTile("Go")
     gameboard = []
-    chance = ChanceCard()
-    community_chest = CmuChest()
     with open("PropertyStats") as prop:
         for readin in prop:
             line = readin.split()
@@ -88,9 +83,9 @@ def fillgameboard():
                 properties[line[2].replace("_", " ")] = PropertyCard(line[2].replace("_", " "), line[3].replace("_", " "), line[4], line[5], line[6], line[7], line[8], line[9], line[10], line[11])
                 gameboard.append(properties[line[2].replace("_", " ")])
             elif line[0] == "cc":
-                gameboard.append(community_chest)
+                gameboard.append(CmuChest())
             elif line[0] == "?":
-                gameboard.append(chance)
+                gameboard.append(ChanceCard())
             elif line[0] == "r":
                 gameboard.append(railway(line[2].replace("_", " ")))
             elif line[0] == "o":
@@ -99,3 +94,8 @@ def fillgameboard():
                 gameboard.append(Utility(line[2].replace("_", " ")))
             else:
                 gameboard.append(ToDo())
+    return gameboard, properties
+
+# gameboard, properties = boardcreate()[0], boardcreate()[1]         # boardcreate() returns gameboard
+# for i in gameboard:                                                # and properties, it creates the
+#     print(i.name)                                                  # board once it's run. Pretty cool.
