@@ -1,3 +1,6 @@
+chance = 0
+cmuchest = 1
+
 class PropertyCard(object):
 
     def __init__(self, name, colour, price, rent, onehouse, twohouse, threehouse, fourhouse, hotel, buildprice, *owner):
@@ -13,4 +16,86 @@ class PropertyCard(object):
         self.buildprice = buildprice
         self.owner = owner
 
-a = PropertyCard("Old Kent Rd", "brown", "60", "2", "10", "30", "90", "160", "250", "50")
+class ChanceCard(object):
+
+    def __init__(self):
+        self.name = "Chance"
+
+    def drawcard(self):
+        pass
+        # when filled, will randomly select a function from a list.
+
+class CmuChest(object):
+
+    def __init__(self):
+        self.name = "Community Chest"
+
+    def drawcard(self):
+        pass
+        # when filled, will randomly select a function from a list.
+
+class railway(object):
+
+    def __init__(self, name):
+        self.name = name
+        self.price = 200
+        self.rent1 = 25
+        self.rent2 = 50
+        self.rent3 = 100
+        self.rent4 = 200
+
+class OtherTile(object):
+
+    def __init__(self, name):
+        self.name = name
+        if name == "Go":
+            self.info = "The starting tile of the board. Pass here and get $200!"
+        if name == "Income Tax":
+            self.rent = 200
+        if name == "Super Tax":
+            self.rent = 75
+        if name == "Jail":
+            pass
+        if name == "Go To Jail":
+            pass
+        if name == "Free Parking":
+            pass
+
+    def taxcalc(self):
+        pass
+
+class Utility(object):
+
+    def __init__(self, name):
+        self.name = name
+        self.price = 150
+
+# class ToDo(object):           # Don't delete just yet! This just acts
+#                               # as a filler for anything we haven't
+#     def __init__(self):       # done yet. If we delete stuff/work
+#         self.name = "---"     # backwards, we'll need it again.
+
+def fillgameboard():
+    properties = {}
+    go = OtherTile("Go")
+    gameboard = []
+    chance = ChanceCard()
+    community_chest = CmuChest()
+    with open("PropertyStats") as prop:
+        for readin in prop:
+            line = readin.split()
+            if line[0] == "p":
+                properties[line[2].replace("_", " ")] = PropertyCard(line[2].replace("_", " "), line[3].replace("_", " "), line[4], line[5], line[6], line[7], line[8], line[9], line[10], line[11])
+                gameboard.append(properties[line[2].replace("_", " ")])
+            elif line[0] == "cc":
+                gameboard.append(community_chest)
+            elif line[0] == "?":
+                gameboard.append(chance)
+            elif line[0] == "r":
+                gameboard.append(railway(line[2].replace("_", " ")))
+            elif line[0] == "o":
+                gameboard.append(OtherTile(line[2].replace("_", " ")))
+            elif line[0] == "u":
+                gameboard.append(Utility(line[2].replace("_", " ")))
+            else:
+                gameboard.append(ToDo())
