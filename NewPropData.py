@@ -1,7 +1,4 @@
-chance = 0
-cmuchest = 1
-
-class PropertyCard(object):
+class PropertyCard:
 
     def __init__(self, name, colour, price, rent, onehouse, twohouse, threehouse, fourhouse, hotel, buildprice, *owner):
         self.name = name
@@ -16,7 +13,7 @@ class PropertyCard(object):
         self.buildprice = buildprice
         self.owner = owner
 
-class ChanceCard(object):
+class ChanceCard:
 
     def __init__(self):
         self.name = "Chance"
@@ -25,7 +22,7 @@ class ChanceCard(object):
         pass
         # when filled, will randomly select a function from a list.
 
-class CmuChest(object):
+class CmuChest:
 
     def __init__(self):
         self.name = "Community Chest"
@@ -34,7 +31,7 @@ class CmuChest(object):
         pass
         # when filled, will randomly select a function from a list.
 
-class railway(object):
+class Railway:
 
     def __init__(self, name):
         self.name = name
@@ -44,7 +41,7 @@ class railway(object):
         self.rent3 = 100
         self.rent4 = 200
 
-class OtherTile(object):
+class OtherTile:
 
     def __init__(self, name):
         self.name = name
@@ -59,28 +56,26 @@ class OtherTile(object):
         if name == "Go To Jail":
             pass
         if name == "Free Parking":
-            pass
+            self.stash = 0      # This is where the tax goes so you can claim it by landing!
 
     def taxcalc(self):
         pass
 
-class Utility(object):
+class Utility:
 
     def __init__(self, name):
         self.name = name
         self.price = 150
 
-# class ToDo(object):           # Don't delete just yet! This just acts
+# class ToDo:           # Don't delete just yet! This just acts
 #                               # as a filler for anything we haven't
 #     def __init__(self):       # done yet. If we delete stuff/work
 #         self.name = "---"     # backwards, we'll need it again.
 
-def fillgameboard():
+def boardcreate():
     properties = {}
     go = OtherTile("Go")
     gameboard = []
-    chance = ChanceCard()
-    community_chest = CmuChest()
     with open("PropertyStats") as prop:
         for readin in prop:
             line = readin.split()
@@ -88,14 +83,25 @@ def fillgameboard():
                 properties[line[2].replace("_", " ")] = PropertyCard(line[2].replace("_", " "), line[3].replace("_", " "), line[4], line[5], line[6], line[7], line[8], line[9], line[10], line[11])
                 gameboard.append(properties[line[2].replace("_", " ")])
             elif line[0] == "cc":
-                gameboard.append(community_chest)
+                gameboard.append(CmuChest())
             elif line[0] == "?":
-                gameboard.append(chance)
+                gameboard.append(ChanceCard())
             elif line[0] == "r":
-                gameboard.append(railway(line[2].replace("_", " ")))
+                gameboard.append(Railway(line[2].replace("_", " ")))
             elif line[0] == "o":
                 gameboard.append(OtherTile(line[2].replace("_", " ")))
             elif line[0] == "u":
                 gameboard.append(Utility(line[2].replace("_", " ")))
             else:
                 gameboard.append(ToDo())
+    return gameboard, properties
+
+gameboard, properties = boardcreate()[0], boardcreate()[1]         # boardcreate() returns gameboard
+for i in gameboard:                                                # and properties, it creates the
+    print(i.name)                                                  # board once it's run. Pretty cool.
+
+
+'''
+Here's an introductory lesson on classes that explains stuff better than I ever could (text):
+https://www.digitalocean.com/community/tutorials/how-to-construct-classes-and-define-objects-in-python-3
+'''
