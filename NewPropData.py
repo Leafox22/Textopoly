@@ -1,8 +1,4 @@
-<<<<<<< HEAD
 class PropertyCard:
-=======
-class PropertyCard(object):
->>>>>>> 482c49671ddb7b8c1644f87d08b99deea1b720d1
 
     def __init__(self, name, colour, price, rent, onehouse, twohouse, threehouse, fourhouse, hotel, buildprice, *owner):
         self.name = name
@@ -100,7 +96,6 @@ def boardcreate():
                 gameboard.append(ToDo())
     return gameboard, properties
 
-<<<<<<< HEAD
 gameboard, properties = boardcreate()[0], boardcreate()[1]         # boardcreate() returns gameboard
 for i in gameboard:                                                # and properties, it creates the
     print(i.name)                                                  # board once it's run. Pretty cool.
@@ -110,8 +105,3 @@ for i in gameboard:                                                # and propert
 Here's an introductory lesson on classes that explains stuff better than I ever could (text):
 https://www.digitalocean.com/community/tutorials/how-to-construct-classes-and-define-objects-in-python-3
 '''
-=======
-# gameboard, properties = boardcreate()[0], boardcreate()[1]         # boardcreate() returns gameboard
-# for i in gameboard:                                                # and properties, it creates the
-#     print(i.name)                                                  # board once it's run. Pretty cool.
->>>>>>> 482c49671ddb7b8c1644f87d08b99deea1b720d1
