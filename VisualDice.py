@@ -1,26 +1,17 @@
-import random
-
-def show_dice():
+def show_dice(roll1, roll2):
 	#dice art (Only front face from: Joan G. Stark, https://www.asciiart.eu/miscellaneous/dice)
-	
-	dicestuff = []
-	dice1 = random.randint(1, 6)
-	dice2 = random.randint(1, 6)
-	dicestuff.append(dice1)
-	dicestuff.append(dice2)
-
-	#first dice
+	dicestuff = roll1, roll2
 	for dice in dicestuff:
 		if dice == 1:
-			print("""	
+			print("""
  _______
 |       |
 |   o   |
 |       |
-'-------' 
+'-------'
 		""")
 		elif dice == 2:
-			print("""	
+			print("""
  _______
 |     o |
 |       |
@@ -59,4 +50,3 @@ def show_dice():
 		| o   o |
 		'-------'
 		""")
-	return (dicestuff)	

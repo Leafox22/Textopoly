@@ -8,7 +8,7 @@ p \ The_Angel,_Islington light_blue 100 6 30 90 270 400 550 50
 ?
 p \ Euston_Rd light_blue 100 6 30 90 270 400 550 50
 p \ Pentonville_Rd light_blue 120 8 40 100 300 450 600 50
-o \ Jail
+j \ Jail
 p \ Pall_Mall pink 140 10 50 150 450 625 750 100
 u \ Electric_Company
 p \ Whitehall pink 140 10 50 150 450 625 750 100
