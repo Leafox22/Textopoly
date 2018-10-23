@@ -87,6 +87,7 @@ class player(object):
 
     def colour_name(self):
         self.name = (fg(self.colour) + self.name + attr("reset"))
+        self.token = (fg(self.colour) + self.token + attr("reset"))
 
     def command_core(self):
         com = input("{}What would you like to do?\n\x1b[38;5;220m☞  ".format(attr("reset"))).lower()
@@ -313,8 +314,9 @@ class player(object):
 # P1 INITIALISATION
 playerlist.append(player("Lachlan"))
 playerlist[0].colour = 112
-playerlist[0].colour_name()
 playerlist[0].token = "♘"
+playerlist[0].colour_name()
+playerlist[0].position = 3
 
 # ADDING PROPERTIES TO P1
 playerlist[0].ownedprops.append(gameboard[39])
@@ -328,9 +330,11 @@ gameboard[6].owner = playerlist[0]
 # P2 INITIALISATION
 playerlist.append(player("Leigh"))
 playerlist[1].colour = 208
-playerlist[1].colour_name()
 playerlist[1].token = "♖"
-playerlist[0].command_core()
+playerlist[1].colour_name()
+playerlist[1].position = 10
+playerlist[1].injail = True
+# playerlist[0].command_core()
 
 # RENT TEST
 '''
