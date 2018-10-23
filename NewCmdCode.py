@@ -348,8 +348,9 @@ gameboard[6].owner = playerlist[0]
 playerlist.append(player("Leigh"))
 playerlist[1].colour = 208
 playerlist[1].token = "♖"
+playerlist[1].colour_name()
 
-playerlist[0].command_core()
+# playerlist[0].command_core()
 
 # RENT TEST
 '''
