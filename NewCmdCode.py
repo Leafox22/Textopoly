@@ -346,7 +346,6 @@ gameboard[6].owner = playerlist[0]
 # # P2 INITIALISATION
 playerlist.append(player("Leigh"))
 playerlist[1].colour = 208
-playerlist[1].colour_name()
 playerlist[1].token = "♖"
 
 playerlist[0].command_core()
