@@ -1,4 +1,4 @@
-from NewPropData import gameboard
+from NewPropData import gameboard, properties, propset
 import colored, sys, textwrap
 from colored import stylize, fg, bg, attr
 from VisualDice import show_dice
@@ -87,6 +87,7 @@ class player(object):
 
     def colour_name(self):
         self.name = (fg(self.colour) + self.name + attr("reset"))
+        self.token = (fg(self.colour) + self.token + attr("reset"))
 
     def command_core(self):
         com = input("{}What would you like to do?\n\x1b[38;5;220m☞  ".format(attr("reset"))).lower()
@@ -96,7 +97,13 @@ class player(object):
         elif (com == "buy")     or (com == "b"):
             self.buy_prop()
         elif (com == "end")     or (com == "e"):
-            print("<<under construction>>")
+            if playerlist.index(self) != (len(playerlist) - 1):
+                next = playerlist[playerlist.index(self)+1]
+            else:
+                next = playerlist[0]
+            print("{}'s turn has ended, and it's {}'s turn to play!".format(self.name, next.name))
+            self.hasrolled = False
+            next.command_core()
         elif (com == "info")    or (com == "i"):
             gameboard[self.position].showcard()
             print()
@@ -223,11 +230,15 @@ class player(object):
             self.command_core()
 
     def inventory(self): ## TODO: Add owned property view (property sets)
+
         print("*" + "-"*49 + "*")
         print("~ {}'s inventory ~".format(self.name).center(65))
         print("\nBalance    : ${}".format(self.money))
         print("Token      : {}".format(self.token))
-        stringy = self.ownedprops[0].name
+        if len(self.ownedprops) > 0:
+            stringy = self.ownedprops[0].name
+        else:
+            stringy = "-"
         for i in self.ownedprops[1:]:
             if len(self.ownedprops) > 1:
                 stringy += ", " + i.name
@@ -235,13 +246,20 @@ class player(object):
         print(textwrap.fill(properties, 100))
         print()
         print(">> To inspect owned properties in depth, enter [i]")
-        # print()
-        print("<< Or, press any other key to exit.")
+        print("⇠  Or, press any other key to exit.")
         next = input("\x1b[38;5;220m☞ ")
         if next == "i":
-            print("{}~ owned prop view ~\n".format(attr("reset")))
-            self.command_core()
+            # print("{}~ owned prop view ~\n".format(attr("reset")))
+            print(attr("reset"))
+            for own in range(0, len(self.ownedprops)):
+                # if self.ownedprops[own]
+                print(propset[self.ownedprops[own].colour])
+
+
+                # print(self.ownedprops[own].name)
+            # self.command_core()
         else:
+            print(attr("reset") + "*" + "-"*49 + "*")
             print()
             self.command_core()
 
@@ -265,7 +283,7 @@ class player(object):
                     elif i.level == 5:
                         print("✦ "*5 + " |" + " [{}]".format(counter))
                 elif i.owner != None:
-                    print(" |" + (fg(i.owner.colour) + i.owner.token + attr("reset")).center(24) + "|  " + i.name.ljust(j) + " |  ", end="")
+                    print(" |" + (fg(i.owner.colour) + i.owner.token + attr("reset")).center(39) + "|  " + i.name.ljust(j) + " |  ", end="")
                     if i.level < 5:
                         print((("✧ "*i.level) + ("  "*(5 - i.level))).ljust(11) + "|" + " [{}]".format(counter))
                     elif i.level == 5:
@@ -313,8 +331,8 @@ class player(object):
 # P1 INITIALISATION
 playerlist.append(player("Lachlan"))
 playerlist[0].colour = 112
-playerlist[0].colour_name()
 playerlist[0].token = "♘"
+playerlist[0].colour_name()
 
 # ADDING PROPERTIES TO P1
 playerlist[0].ownedprops.append(gameboard[39])
@@ -324,12 +342,13 @@ playerlist[0].ownedprops.append(gameboard[37])
 gameboard[37].owner = playerlist[0]
 playerlist[0].ownedprops.append(gameboard[6])
 gameboard[6].owner = playerlist[0]
-
-# P2 INITIALISATION
+#
+# # P2 INITIALISATION
 playerlist.append(player("Leigh"))
 playerlist[1].colour = 208
 playerlist[1].colour_name()
 playerlist[1].token = "♖"
+
 playerlist[0].command_core()
 
 # RENT TEST

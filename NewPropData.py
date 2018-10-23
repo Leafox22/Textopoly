@@ -142,10 +142,10 @@ class Utility(Not_Prop):
         self.info = "If ONE Utility is owned, rent is 4x amount shown on dice.\nIf BOTH Utilities are owned, rent is 10x the amount shown on the dice."
         self.owner = None
 
-# class ToDo:           # Don't delete just yet! This just acts
-#                               # as a filler for anything we haven't
-#     def __init__(self):       # done yet. If we delete stuff/work
-#         self.name = "---"     # backwards, we'll need it again.
+class ToDo:           # Don't delete just yet! This just acts
+                              # as a filler for anything we haven't
+    def __init__(self):       # done yet. If we delete stuff/work
+        self.name = "---"     # backwards, we'll need it again.
 
 def boardcreate():
     properties = {}
@@ -155,8 +155,9 @@ def boardcreate():
         for readin in prop:
             line = readin.split()
             if line[0] == "p":
-                properties[line[2].replace("_", " ")] = Property_Card(line[2].replace("_", " "), line[3].replace("_", " "), line[4], line[5], line[6], line[7], line[8], line[9], line[10], line[11])
-                gameboard.append(properties[line[2].replace("_", " ")])
+                proppy = Property_Card(line[2].replace("_", " "), line[3].replace("_", " "), line[4], line[5], line[6], line[7], line[8], line[9], line[10], line[11])
+                gameboard.append(proppy)
+                properties[line[2].replace("_", " ")] = proppy
             elif line[0] == "cc":
                 gameboard.append(Community_Chest())
             elif line[0] == "?":
@@ -173,8 +174,26 @@ def boardcreate():
                 gameboard.append(ToDo())
     return gameboard, properties
 
-gameboard, properties = boardcreate()[0], boardcreate()[1]
+def property_sets():
+    proset = []
+    propset = {}
+    store = ""
+    upto = -1
+    for p in properties:
+        if store != properties[p].colour:
+            proset.append([properties[p]])
+            store = properties[p].colour
+            upto += 1
+        elif store == properties[p].colour:
+            proset[upto].append(properties[p])
+    for pro in proset:
+        propset[pro[0].colour] = pro
+    return propset
 
+gameboard, properties = boardcreate()
+
+
+propset = property_sets()
 
 '''
 Here's an introductory lesson on classes that explains stuff better than I ever could (text):
