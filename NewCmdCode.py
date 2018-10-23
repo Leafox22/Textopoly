@@ -84,6 +84,7 @@ class player(object):
         self.hasrolled = False
         self.injail = False
         self.jailtime = 0
+        self.gOoJFCard = False
 
     def colour_name(self):
         self.name = (fg(self.colour) + self.name + attr("reset"))
