@@ -343,6 +343,8 @@ playerlist[0].ownedprops.append(gameboard[37])
 gameboard[37].owner = playerlist[0]
 playerlist[0].ownedprops.append(gameboard[6])
 gameboard[6].owner = playerlist[0]
+gameboard[29].level = 5
+
 #
 # # P2 INITIALISATION
 playerlist.append(player("Leigh"))
