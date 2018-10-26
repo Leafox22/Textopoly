@@ -100,11 +100,15 @@ class Railway(Not_Prop):
     def __init__(self, name):
         self.nametext = name
         self.name = (fg(245) + attr("bold") + name + attr("reset"))
+        self.colour = "railway"
         self.price = 200
         self.rent = [25, 50, 100, 200]
         self.level = 0
 
         self.owner = None
+
+    def colourpick(self, colour):
+        return 245
 
 class OtherTile(Not_Prop):
 
@@ -137,15 +141,14 @@ class Utility(Not_Prop):
 
     def __init__(self, name):
         self.nametext = name
-        self.name = (fg(146) + attr("bold") + name + attr("reset"))
+        self.name = (fg(228) + attr("bold") + name + attr("reset"))
         self.price = 150
+        self.colour = "utility"
         self.info = "If ONE Utility is owned, rent is 4x amount shown on dice.\nIf BOTH Utilities are owned, rent is 10x the amount shown on the dice."
         self.owner = None
 
-class ToDo:           # Don't delete just yet! This just acts
-                              # as a filler for anything we haven't
-    def __init__(self):       # done yet. If we delete stuff/work
-        self.name = "---"     # backwards, we'll need it again.
+    def colourpick(self, colour):
+        return 228
 
 def boardcreate():
     properties = {}
@@ -174,6 +177,8 @@ def boardcreate():
                 gameboard.append(ToDo())
     return gameboard, properties
 
+gameboard, properties = boardcreate()
+
 def property_sets():
     proset = []
     propset = {}
@@ -188,10 +193,9 @@ def property_sets():
             proset[upto].append(properties[p])
     for pro in proset:
         propset[pro[0].colour] = pro
+    propset["railway"] = [gameboard[5], gameboard[15], gameboard[25], gameboard[35]]
+    propset["utility"] = [gameboard[12], gameboard[28]]
     return propset
-
-gameboard, properties = boardcreate()
-
 
 propset = property_sets()
 

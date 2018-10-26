@@ -45,7 +45,7 @@ def start_game():
         playerlist.append(player(playname))
     print(attr("reset"))
     print("Excellent. Now, pick a colour! This will show on property cards,\non the gameboard and on the menu.")
-    colourray = [1, 208, 112, 43, 38, 183, 126]
+    colourray = [160, 208, 112, 121, 183, 126]
     for col in colourray:
         print(fg(col) + attr("bold") + "Colour: {}".format((colourray.index(col))+1))
     print()
@@ -114,6 +114,7 @@ class player(object):
             self.inventory()
         elif (com == "upgrade") or (com == "u"):
             print("<<under construction>>")
+            self.command_core()
         elif (com == "help") or (com == "?"):
             self.tooltips()
         else:
@@ -229,7 +230,7 @@ class player(object):
             print("You can't just buy {}!".format(place.name))
             self.command_core()
 
-    def inventory(self): ## TODO: Add owned property view (property sets)
+    def inventory(self):
 
         print("*" + "-"*49 + "*")
         print("~ {}'s inventory ~".format(self.name).center(65))
@@ -245,19 +246,39 @@ class player(object):
         properties = "Properties : " + stringy
         print(textwrap.fill(properties, 100))
         print()
-        print(">> To inspect owned properties in depth, enter [i]")
+        print(">> To inspect owned properties sets, enter [i]")
         print("⇠  Or, press any other key to exit.")
         next = input("\x1b[38;5;220m☞ ")
+        selectlist, count = [], 0
         if next == "i":
-            # print("{}~ owned prop view ~\n".format(attr("reset")))
             print(attr("reset"))
-            for own in range(0, len(self.ownedprops)):
-                # if self.ownedprops[own]
-                print(propset[self.ownedprops[own].colour])
+            colourdone = ""
+            for own in self.ownedprops:
+                if own.colour != colourdone:
+                    for test in propset[own.colour]:
+                        count += 1
+                        if test in self.ownedprops:
+                            print("[{}] ".format(count) + test.name + fg(own.colourpick(own.colour)) + " ✓" + attr("reset"))
+                        else:
+                            print("[{}] ".format(count) + attr("dim") + test.name + attr("reset"))
+                        selectlist.append(test)
+                    print()
+                colourdone = own.colour
+            ind = input("    Property to inspect (press a key not listed above to exit)\n    \x1b[38;5;220m☞  ").lower()
+            print()
+            try:
+                if int(ind) in range(1, len(selectlist)+1):
+                    print(attr("reset"))
+                    selectlist[int(ind)-1].showcard()
+                    print()
+                    self.command_core()
+                else:
+                    print(attr("reset") + "*" + "-"*49 + "*")
+                    self.command_core()
+            except ValueError:
+                print(attr("reset") + "*" + "-"*49 + "*")
+                self.command_core()
 
-
-                # print(self.ownedprops[own].name)
-            # self.command_core()
         else:
             print(attr("reset") + "*" + "-"*49 + "*")
             print()
@@ -296,7 +317,7 @@ class player(object):
                 if i.owner == None:
                     print(" |" + ("-").center(9) + "|  " + i.name.ljust(40) + " |  " + "   N/A     | [{}]".format(counter))
                 elif i.owner != None:
-                    print(" |" + (fg(i.owner.colour) + i.owner.token + attr("reset")).center(24) + "|  " + i.name.ljust(40) + " |  " + "   N/A     | [{}]".format(counter))
+                    print(" |" + (fg(i.owner.colour) + i.owner.token + attr("reset")).center(39) + "|  " + i.name.ljust(40) + " |  " + "   N/A     | [{}]".format(counter))
         print(" +" + "-"*48 + "+")
         for i in gameboard:
             if i.__class__.__name__ == "Utility":
@@ -305,7 +326,7 @@ class player(object):
                 if i.owner == None:
                     print(" |" + ("-").center(9) + "|  " + i.name.ljust(40) + " |  " + "   N/A     | [{}]".format(counter))
                 elif i.owner != None:
-                    print(" |" + (fg(i.owner.colour) + i.owner.token + attr("reset")).center(24) + "|  " + i.name.ljust(40) + " |  " + "   N/A     | [{}]".format(counter))
+                    print(" |" + (fg(i.owner.colour) + i.owner.token + attr("reset")).center(39) + "|  " + i.name.ljust(40) + " |  " + "   N/A     | [{}]".format(counter))
         print(" +" + "-"*48 + "+")
         # print(biglist[counter-1].name)
         print()
@@ -329,8 +350,8 @@ class player(object):
 # start_game()
 
 # P1 INITIALISATION
-playerlist.append(player("Lachlan"))
-playerlist[0].colour = 112
+playerlist.append(player("Tim"))
+playerlist[0].colour = 123
 playerlist[0].token = "♘"
 playerlist[0].colour_name()
 
@@ -340,13 +361,17 @@ gameboard[39].owner = playerlist[0]
 gameboard[39].level = 5
 playerlist[0].ownedprops.append(gameboard[37])
 gameboard[37].owner = playerlist[0]
-playerlist[0].ownedprops.append(gameboard[6])
-gameboard[6].owner = playerlist[0]
+playerlist[0].ownedprops.append(gameboard[5])
+gameboard[5].owner = playerlist[0]
+playerlist[0].ownedprops.append(gameboard[12])
+gameboard[12].owner = playerlist[0]
 #
 # # P2 INITIALISATION
-playerlist.append(player("Leigh"))
-playerlist[1].colour = 208
+playerlist.append(player("Lachlan"))
+playerlist[1].colour = 160
 playerlist[1].token = "♖"
+playerlist[1].colour_name()
+
 
 playerlist[0].command_core()
 
