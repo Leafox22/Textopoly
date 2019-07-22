@@ -63,7 +63,7 @@ def printBoard():
     print("|{}|                                                                                |{}|".format(" ".join(boardSpace[39]).center(cf(39)), " ".join(boardSpace[11]).center(cf(11))))
     print("|{}|                                                                                |{}|".format(housePrint(gameboard[39].level,"big"), housePrint(gameboard[11].level,"big")))
     print("+--------+--------+                                                                                +--------+--------+")
-    print("|   SUPER TAX     |               "+fg(11)+"//////////////"+ attr("reset")+"                                                   |   "+fg(146)+"Electic Co."+ attr("reset")+"   |")
+    print("|   SUPER TAX     |               "+fg(11)+"//////////////"+ attr("reset")+"                                                   |   "+fg(146)+"Electric Co."+ attr("reset")+"  |")
     print("|    Pay $100     |              "+fg(11)+"/            /"+ attr("reset")+"                                                    |      $150       |")
     print("|{}|".format(" ".join(boardSpace[38]).center(cf(38))) + "             "+fg(11)+"/            /"+ attr("reset")+"                                                     |{}|".format(" ".join(boardSpace[12]).center(cf(12))))
     print("|                 |            "+fg(11)+"/    COMM.   /"+ attr("reset")+"                                                      |                 |")
